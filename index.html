@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pomodoro Melocoton</title>
+    <link rel="stylesheet" href="style.css">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&family=Tinos:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    
+</head>
+<body>
+
+    <button id="boton-menu">☰</button>
+    <div id="contenedor-opciones">
+        <a href="#" id="boton-cierre">&times;</a>
+        <h2>Configuraciones</h2>
+        <label for="work-time">Work Time:</label>
+        <input type="number" id="work-time" min="1" max="60" value="25">
+
+        <label for="break-time">Break Time:</label>
+        <input type="number" id="break-time" min="1" max="15" value="5">
+
+        <label for="sets">Sets:</label>
+        <input type="number" id="sets" min="1" max="10" value="4">
+    </div>
+
+
+    <h1>Pomodoro Melocoton</h1>
+    <h2 id="heading-2">Work!!</h2>
+
+    <section id="temporizador">
+        <div id="info-set">
+            <img src="https://images.vexels.com/media/users/3/272048/isolated/preview/ffe477e3c59bce60b203051f33628276-gato-negro-de-dibujos-animados-sentado.png" id="imagen-gato">
+            <div id="pomodoro-set">Pomodoro#1</div>
+        </div>
+        <div id="tiempo">
+            <div id="minutos">25</div>:<div id="segundos">00</div>
+        </div>
+        <div id="progreso-container">
+            <div id="progreso">
+                
+            </div>
+        </div>
+            
+    </section>
+
+    <section id="botones">
+        <button id="boton-play"><i class="fas fa-play"> Play</i></button>
+        <button id="boton-pause"><i class="fas fa-pause"> Pause</i></button>
+        <button id="boton-stop"><i class="fas fa-stop"> Restart</i></button>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>

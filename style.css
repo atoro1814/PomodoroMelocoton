@@ -1,0 +1,260 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+
+
+body{
+    background: linear-gradient(135deg, #FFDEE9, #B5FFFC);
+    background-attachment: fixed; /* Para que el fondo no se mueva al hacer scroll */
+    
+    color: #333;
+    font-family: "raleway" , serif;
+    
+    display: flex;
+    
+    flex-direction: column;
+    align-items: center;
+    
+}
+
+/* Diseño de Opciones */
+
+#boton-menu{
+    background: transparent;
+    font-size: 50px;
+    border: none;
+    position: absolute;
+    left: 20px;
+    
+}
+#boton-cierre {
+   position: absolute;
+   top : 20px;
+   right: 20px;
+   color:#333;
+   font-size: 50px;
+   text-decoration: none;
+}
+
+#contenedor-opciones{
+    position:fixed;
+    overflow-x: hidden;
+    height: 100%;
+    padding: 60px;
+    top : 0;
+    left: 0;
+    background-color: rgba(135, 206, 235, 0.8);
+    display: flex;
+    flex-direction: column;
+    display: none;
+    transition: 0.3s;
+}
+#contenedor-opciones> input{
+    padding: 10px;
+    font-size: 24px;
+    margin-bottom: 10px;
+    border-radius: 20px;
+    border: none;
+}
+#contenedor-opciones> h2{
+    margin-bottom: 20px;
+}
+
+/* Titulo */
+h1{
+    position: absolute;
+    top: 20px;
+}
+#heading-2{
+    position: absolute;
+    top: 20%;
+    display: none;
+}
+
+
+/* Diseño Temporizador */
+
+#temporizador{
+    position: absolute;
+    top: 30%;
+    padding: 60px;
+    border: 2px solid #333;
+    border-radius: 20px;  
+    box-shadow: 2px 0 15px rgba(0, 0, 0, 0.3);
+}
+#info-set > img{
+    height: 70px;
+    width: 70px;
+}
+
+
+#tiempo{
+    font-size: 48px;
+    display: inline-block;
+    margin: 10px;
+    font-family: 'Courier New', Courier, monospace;
+}
+#info-set {
+    display: inline-block;
+    font-size: 24px;
+    margin: 10px;
+    text-align: center;
+
+}
+#tiempo > div{
+    display: inline-block;
+    
+}
+
+#barra-progreso{
+    width: 100%;
+    height: 40px;
+}
+
+
+/* Diseño Botones */
+
+#botones{
+    position: absolute;
+    top: 70%;
+    margin-top: 20px;
+
+}
+
+#boton-play, #boton-pause, #boton-stop{
+    font-size: 20px;
+    background-color: rgba(76, 175, 80, 0.7);
+    border: none;
+    border-radius: 20px;
+    color: #FFFFFF;
+    padding: 30px;
+    transition: background-color 0.3s ease, transform 0.2s ease, opacity 0.3s ease;
+    backdrop-filter: blur(5px); /* Difumina ligeramente el fondo */
+}
+#boton-play:hover, #boton-pause:hover, #boton-stop:hover{
+    background-color: #836FFF;
+}
+#boton-play{
+    font-size: 20px;
+    background-color: rgba(76, 175, 80, 0.7);
+    border: none;
+    border-radius: 20px;
+    color: #FFFFFF;
+    padding: 30px;
+    transition: background-color 0.3s ease, transform 0.2s ease, opacity 0.3s ease;
+    backdrop-filter: blur(5px); /* Difumina ligeramente el fondo */
+}
+#boton-play:hover{
+    background-color: rgba(67, 160, 71, 0.9); /* Verde más oscuro y menos transparente */
+    transform: scale(1.05); /* Efecto de ampliación */
+}
+
+#boton-pause{
+    font-size: 20px;
+    background-color: rgba(33, 150, 243, 0.7); /* Azul claro semitransparente */
+    border: none;
+    border-radius: 20px;
+    color: #FFFFFF;
+    padding: 30px;
+    transition: background-color 0.3s ease, transform 0.2s ease, opacity 0.3s ease;
+    backdrop-filter: blur(5px); /* Difumina ligeramente el fondo */
+}
+
+#boton-pause:hover{
+    background-color: rgba(30, 136, 229, 0.9); /* Azul más intenso y menos transparente */
+    transform: scale(1.05);
+}
+
+#boton-stop{
+    font-size: 20px;
+    background-color: rgba(244, 67, 54, 0.7); /* Rojo vivo semitransparente */
+    border: none;
+    border-radius: 20px;
+    color: #FFFFFF;
+    padding: 30px;
+    transition: background-color 0.3s ease, transform 0.2s ease, opacity 0.3s ease;
+    backdrop-filter: blur(5px); /* Difumina ligeramente el fondo */
+}
+
+#boton-stop:hover{
+    background-color: rgba(229, 57, 53, 0.9); /* Rojo más oscuro y menos transparente */
+    transform: scale(1.05);
+}
+
+
+@media screen and (max-width: 768px) {
+    body {
+        font-size: 14px; /* Reduce el tamaño de fuente */
+    }
+
+    #temporizador {
+        width: 70%; /* Ajusta el ancho */
+        padding: 30px;
+    }
+
+    #botones button {
+        padding: 15px; /* Reduce el tamaño de los botones */
+        font-size: 16px; /* Reduce el texto */
+    }
+
+    #contenedor-opciones {
+        width: 100%; /* Ocupa todo el ancho en pantallas pequeñas */
+    }
+
+    h1 {
+        font-size: 20px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    #boton-menu {
+        font-size: 40px; /* Ajusta el tamaño del menú */
+    }
+
+    #temporizador {
+        font-size: 20px; /* Reduce el texto del temporizador */
+    }
+
+    #botones {
+        flex-direction: column; /* Los botones estarán apilados en lugar de alineados horizontalmente */
+    }
+
+    #botones button {
+        width: 100%; /* Cada botón ocupa todo el ancho */
+        margin-bottom: 10px; /* Espacio entre los botones */
+    }
+}
+
+
+/* barra progreso */
+
+#progreso-container {
+    width: 100%;
+    height: 20px;
+    background-color: #f3f3f3;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#progreso {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, #76c7c0, #4caf50);
+    transition: width 0.1s linear;
+}
+
+
+
+
+
+
+
+
+
+
+
