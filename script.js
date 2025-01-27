@@ -40,6 +40,7 @@ let minutosHTML = document.getElementById("minutos");
 let segundosHTML = document.getElementById("segundos");
 let heading2 = document.getElementById("heading-2");
 let imagenGato = document.getElementById("imagen-gato");
+let sound = document.getElementById("sound");
 
 botonPlay.addEventListener("click", function(){
     if(pomodoroInterval == "Inicio"){
@@ -52,6 +53,8 @@ botonPlay.addEventListener("click", function(){
         botonPlay.disabled = true; 
         botonPause.disabled = false;
         botonRestart.disabled = false;
+        sound.play();
+        
 
         pomodoro();
         
@@ -116,7 +119,7 @@ function pomodoro(){
 }
 
 function startPomodoro(){
-    let minutos = Math.floor(workSeconds / 60) ;
+    let minutos = Math.floor(workSeconds / 60);
     let segundos = workSeconds % 60;
     pomodoroSection = "Work";
     actualizarProgreso(workSeconds, parseInt(workTime.value));
@@ -126,6 +129,8 @@ function startPomodoro(){
     heading2.innerHTML = "Work!!";
     /* cambiar imagen gato*/
     imagenGato.src ="https://i.gifer.com/origin/c3/c366c9ba820eefe6e183a351f5716b4e_w200.gif"
+
+    
 
     if(segundos == 0){
         segundosHTML.innerHTML = "00";
@@ -149,6 +154,7 @@ function startPomodoro(){
         interval = setInterval(breakPomodoro, 1000);
         workSeconds = parseInt(workTime.value) * 60;
         barraProgreso.style.width = "0%";
+        sound.play();
     }else{
         workSeconds--;
     }
@@ -184,6 +190,7 @@ function breakPomodoro(){
         breakSeconds = parseInt(breakTime.value) * 60;
         barraProgreso.style.width = "0%";
         pomodoro();
+        sound.play();
 
     }else{
         breakSeconds--;
