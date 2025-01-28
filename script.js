@@ -14,160 +14,135 @@ botonCierre.addEventListener("click", function(){
 })
 
 /*logica para el cronometro*/
-
-let workTime = document.getElementById("work-time");
-let breakTime = document.getElementById("break-time");
-let sets = document.getElementById("sets");
-let setPomodoro = document.getElementById("pomodoro-set");
-
 let workSeconds;
-let breakSeconds; 
-let setsUsuario;
-let set = 1;
+let breakSeconds;
+let setsTotal;
 
-let botonPlay = document.getElementById("boton-play");
-let botonPause = document.getElementById("boton-pause");
-botonPause.disabled = true;
-let botonRestart = document.getElementById("boton-stop");
-botonRestart.disabled = true;
 
-let interval;
-let pomodoroInterval = "Inicio";
-let pomodoroSection = "Work";
-let barraProgreso = document.getElementById("progreso");
-
+//obtener elementos del DOM de la configuracion
+let workMinutes = document.getElementById("work-time");
+let breakMinutes = document.getElementById("break-time");
+let setTime = document.getElementById("sets");
 let minutosHTML = document.getElementById("minutos");
 let segundosHTML = document.getElementById("segundos");
+let setsHTML = document.getElementById("pomodoro-set");
 let heading2 = document.getElementById("heading-2");
 let imagenGato = document.getElementById("imagen-gato");
 let sound = document.getElementById("sound");
 
+//variables
+let setInicial = 1;
+let estado = "work";
+let interval;
+let seccion = "Inicio";
+
+let botonPlay = document.getElementById("boton-play");
+let botonPause = document.getElementById("boton-pause");
+let botonRestart = document.getElementById("boton-stop");
+
+//configuracion de los botones estado Inicial
+
+botonPause.disabled = true;
+botonRestart.disabled = true;
+
+
 botonPlay.addEventListener("click", function(){
-    if(pomodoroInterval == "Inicio"){
-        pomodoroInterval = "Ejecucion";
-        /* tomamos los valores y ejecutamos el pomodoro*/ 
-        workSeconds = parseInt(workTime.value) * 60;
-        breakSeconds = parseInt(breakTime.value) * 60;
-        setsUsuario = parseInt(sets.value);
-        //habilitamos los botones y desactivamos
-        botonPlay.disabled = true; 
-        botonPause.disabled = false;
-        botonRestart.disabled = false;
-        sound.play();
+    //obtener segundos de trabajo
+    
+    
+    heading2.style.display = "block";
+    //configuracion de botones
+    botonPlay.disabled = true;
+    botonPause.disabled = false;
+    botonRestart.disabled = false;
+    //iniciar el cronometro
+    if(seccion == "Inicio"){
+        workSeconds = parseInt(workMinutes.value) * 60;
+        breakSeconds = parseInt(breakMinutes.value) * 60;
         
-
+        setsTotal = parseInt(setTime.value);
+        pomodoro();     
+    }else if(seccion == "Ejecucion"){
         pomodoro();
-        
-    }else if(pomodoroInterval == "Pausa"){
-        botonPlay.disabled = true; 
-        botonPause.disabled = false;
-        botonRestart.disabled = false;
-        imagenGato.src ="https://i.gifer.com/origin/c3/c366c9ba820eefe6e183a351f5716b4e_w200.gif";
-        pomodoroInterval = "Ejecucion";
-        pomodoro(); // volvemos a ejecutar el pomodoro en donde quedo
-
     }
 })
 botonPause.addEventListener("click", function(){
-    if(pomodoroInterval == "Ejecucion"){
-        clearInterval(interval);
-        pomodoroInterval = "Pausa";
-        botonPlay.disabled = false;
-        botonPause.disabled = true;
-        imagenGato.src = "https://images.vexels.com/media/users/3/272048/isolated/preview/ffe477e3c59bce60b203051f33628276-gato-negro-de-dibujos-animados-sentado.png";
-    }
+    clearInterval(interval);
+    seccion = "Ejecucion";
+    //configuracion de botones
+    botonPlay.disabled = false;
+    botonRestart.disabled = false;
+    botonPause.disabled = true; 
+
 })
+
 botonRestart.addEventListener("click", function(){
-    pomodoroInterval = "Inicio";
-    botonPlay.disabled= false;
+    //configuracion de botones
+    botonPlay.disabled = false;
     botonPause.disabled = true;
     botonRestart.disabled = true;
-    minutosHTML.innerHTML = workTime.value;
-    segundosHTML.innerHTML = "00";
-    pomodoroSection = "Work";
-    set = 1;
-    barraProgreso.style.width = "0%";
-    clearInterval(interval);
-    heading2.style.display = "none";
-    imagenGato.src = "https://images.vexels.com/media/users/3/272048/isolated/preview/ffe477e3c59bce60b203051f33628276-gato-negro-de-dibujos-animados-sentado.png";
-})
 
+    restaurar();
+})
 function pomodoro(){
-    
-    if(set <= setsUsuario){
-        setPomodoro.innerHTML = "Pomodoro#" + set;
-        if(pomodoroSection == "Work"){
-            interval = setInterval(startPomodoro, 1000); 
-        }else{
-            interval =  setInterval(breakPomodoro,1000);
+    if(setInicial <= setsTotal){
+        if(estado == "work"){
+            sound.play();
+            interval = setInterval(startPomodoro, 1000);
+        
+        }else if (estado == "break"){
+            sound.play();
+            interval = setInterval(breakPomodoro, 1000);
         }
     }else{
-        alert("Pomodoro terminado");
-        pomodoroInterval = "Inicio";
-        botonPlay.disabled= false;
-        botonPause.disabled = true;
-        botonRestart.disabled = true;
-        minutosHTML.innerHTML = workTime.value;
-        segundosHTML.innerHTML = "00";
-        pomodoroSection = "Work";
-        set = 1;
-        barraProgreso.style.width = "0%";
-        clearInterval(interval);
-        heading2.style.display = "none";
-        imagenGato.src = "https://images.vexels.com/media/users/3/272048/isolated/preview/ffe477e3c59bce60b203051f33628276-gato-negro-de-dibujos-animados-sentado.png";
+        heading2.innerHTML = "Pomodoro Terminado";
+        restaurar();
     }
 }
-
 function startPomodoro(){
-    let minutos = Math.floor(workSeconds / 60);
-    let segundos = workSeconds % 60;
-    pomodoroSection = "Work";
+    //cambios en el DOM
     
-    actualizarProgreso(workSeconds, parseInt(workTime.value));
-    
-    /* Cambiar h2 */
-    heading2.style.display = "block";
+    setsHTML.innerHTML = "pomodoro#" + setInicial;
     heading2.innerHTML = "Work!!";
-    /* cambiar imagen gato*/
     imagenGato.src ="https://i.gifer.com/origin/c3/c366c9ba820eefe6e183a351f5716b4e_w200.gif"
 
-    
-
-    if(segundos == 0){
-        segundosHTML.innerHTML = "00";
-    }
-    else{
-        if(segundos < 10){
-            segundosHTML.innerHTML = "0" + segundos;
-        }else{
-            segundosHTML.innerHTML = segundos;
-        }        
-    }
-
-    if(minutos < 10){
-        minutosHTML.innerHTML = "0" + minutos;
-    }else{
-        minutosHTML.innerHTML = minutos;
-    }
+    let minutos = Math.floor(workSeconds / 60);
+    let segundos = workSeconds % 60;
+    actualizarTiempoHTML(minutos,segundos);
 
     if(workSeconds == 0){
-        clearInterval(interval); 
-        interval = setInterval(breakPomodoro, 1000);
-        workSeconds = parseInt(workTime.value) * 60;
-        barraProgreso.style.width = "0%";
-        sound.play();
+        clearInterval(interval);
+        estado = "break";
+        workSeconds = parseInt(workMinutes.value) * 60;
+        pomodoro();
     }else{
         workSeconds--;
     }
 }
 function breakPomodoro(){
-    pomodoroSection = "Break";
-    actualizarProgreso(breakSeconds, parseInt(breakTime.value));
-    let minutos = Math.floor(breakSeconds / 60) ;
-    let segundos = breakSeconds % 60;
-    heading2.innerHTML = "Break";
+    //cambios en el DOM
+    setsHTML.innerHTML = "pomodoro#" + setInicial;
+    heading2.innerHTML = "Break!!";
     imagenGato.src = "https://images.vexels.com/media/users/3/272048/isolated/preview/ffe477e3c59bce60b203051f33628276-gato-negro-de-dibujos-animados-sentado.png";
     
+    let minutos = Math.floor(breakSeconds / 60) ;
+    let segundos = breakSeconds % 60;
+    
+    actualizarTiempoHTML(minutos,segundos); 
+
+
+    if(breakSeconds == 0){
+        clearInterval(interval); 
+        estado = "work";
+        setInicial++;
+        breakSeconds = parseInt(breakMinutes.value) * 60;
+        pomodoro();
+    }else{
+        breakSeconds--;
+    }
+}
+
+function actualizarTiempoHTML (minutos,segundos){
     if(segundos == 0){
         segundosHTML.innerHTML = "00";
     }
@@ -184,27 +159,31 @@ function breakPomodoro(){
     }else{
         minutosHTML.innerHTML = minutos;
     }
+}
+function restaurar(){
+    clearInterval(interval);
+    //configuracion de botones
+    botonPlay.disabled = false;
+    botonPause.disabled = true;
+    botonCierre.disabled = true;
 
-    if(breakSeconds == 0){
-        clearInterval(interval); 
-        set++;
-        breakSeconds = parseInt(breakTime.value) * 60;
-        barraProgreso.style.width = "0%";
-        
-        pomodoro();
-        sound.play();
+    workSeconds = parseInt(workMinutes.value) * 60;
+    breakSeconds = parseInt(breakMinutes.value) * 60;
+    setInicial = 1;
+    setsHTML.innerHTML = "pomodoro#" + setInicial;
+    seccion = "Inicio";
+    estado = "work";
+    let minutos = Math.floor(workSeconds / 60);
+    let segundos = workSeconds % 60;
+    actualizarTiempoHTML(minutos,segundos);
 
-    }else{
-        breakSeconds--;
-    }
 }
 
-function actualizarProgreso(tiempoRestante,tiempoTotal){
-    tiempoTotal =  tiempoTotal * 60;
-    let progress = ((tiempoTotal - tiempoRestante) / tiempoTotal) * 100;
 
-    barraProgreso.style.width = progress + "%";
-}
+
+
+
+
 
 
 
