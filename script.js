@@ -29,6 +29,7 @@ let setsHTML = document.getElementById("pomodoro-set");
 let heading2 = document.getElementById("heading-2");
 let imagenGato = document.getElementById("imagen-gato");
 let sound = document.getElementById("sound");
+let barraProgreso = document.getElementById("progreso");
 
 //variables
 let setInicial = 1;
@@ -102,13 +103,14 @@ function pomodoro(){
 function startPomodoro(){
     //cambios en el DOM
     
-    setsHTML.innerHTML = "pomodoro#" + setInicial;
+    setsHTML.innerHTML = "Pomodoro#" + setInicial;
     heading2.innerHTML = "Work!!";
     imagenGato.src ="https://i.gifer.com/origin/c3/c366c9ba820eefe6e183a351f5716b4e_w200.gif"
 
     let minutos = Math.floor(workSeconds / 60);
     let segundos = workSeconds % 60;
     actualizarTiempoHTML(minutos,segundos);
+    actualizarProgreso(workSeconds, parseInt(workMinutes.value));
 
     if(workSeconds == 0){
         clearInterval(interval);
@@ -121,7 +123,7 @@ function startPomodoro(){
 }
 function breakPomodoro(){
     //cambios en el DOM
-    setsHTML.innerHTML = "pomodoro#" + setInicial;
+    setsHTML.innerHTML = "Pomodoro#" + setInicial;
     heading2.innerHTML = "Break!!";
     imagenGato.src = "https://images.vexels.com/media/users/3/272048/isolated/preview/ffe477e3c59bce60b203051f33628276-gato-negro-de-dibujos-animados-sentado.png";
     
@@ -129,6 +131,7 @@ function breakPomodoro(){
     let segundos = breakSeconds % 60;
     
     actualizarTiempoHTML(minutos,segundos); 
+    actualizarProgreso(breakSeconds, parseInt(breakMinutes.value));
 
 
     if(breakSeconds == 0){
@@ -170,13 +173,18 @@ function restaurar(){
     workSeconds = parseInt(workMinutes.value) * 60;
     breakSeconds = parseInt(breakMinutes.value) * 60;
     setInicial = 1;
-    setsHTML.innerHTML = "pomodoro#" + setInicial;
+    setsHTML.innerHTML = "Pomodoro#" + setInicial;
     seccion = "Inicio";
     estado = "work";
     let minutos = Math.floor(workSeconds / 60);
     let segundos = workSeconds % 60;
     actualizarTiempoHTML(minutos,segundos);
+}
+function actualizarProgreso(tiempoRestante,tiempoTotal){
+    tiempoTotal =  tiempoTotal * 60;
+    let progress = ((tiempoTotal - tiempoRestante) / tiempoTotal) * 100;
 
+    barraProgreso.style.width = progress + "%";
 }
 
 
