@@ -122,6 +122,7 @@ function startPomodoro(){
     let minutos = Math.floor(workSeconds / 60);
     let segundos = workSeconds % 60;
     pomodoroSection = "Work";
+    
     actualizarProgreso(workSeconds, parseInt(workTime.value));
     
     /* Cambiar h2 */
@@ -189,6 +190,7 @@ function breakPomodoro(){
         set++;
         breakSeconds = parseInt(breakTime.value) * 60;
         barraProgreso.style.width = "0%";
+        
         pomodoro();
         sound.play();
 
